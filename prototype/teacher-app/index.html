@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interactive teacher attendance application prototype">
+  <title>Pupils Teacher Prototype</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <!-- Everything in the prototype is scoped inside this application container. -->
+  <main id="teacher-app" class="app-shell">
+    <!-- SCREEN 1: the teacher signs in using the pre-filled prototype account. -->
+    <section id="login-screen" class="screen is-active" aria-labelledby="login-title">
+      <div class="login-layout">
+        <div class="brand"><span class="brand-mark" aria-hidden="true">P</span><span><strong>Pupils</strong><small>Teacher workspace</small></span></div>
+        <article class="card login-card">
+          <h1 id="login-title">Welcome back</h1>
+          <p>Sign in to view your classes and registers.</p>
+          <form id="login-form" class="form-stack">
+            <label>Email<input id="teacher-email" type="email" value="sarah@oakfield.school" autocomplete="email" required></label>
+            <label>Password<span class="password-field"><input id="teacher-password" type="password" value="prototype" autocomplete="current-password" required><button id="password-toggle" class="button button-quiet" type="button" aria-label="Show password">Show</button></span></label>
+            <button class="button button-primary button-block" type="submit">Sign in</button>
+            <button class="button button-quiet" type="button">Forgot password?</button>
+          </form>
+        </article>
+        <small>Prototype credentials are already filled in.</small>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: displayed briefly after login to demonstrate app startup. -->
+    <section id="loading-screen" class="screen" aria-label="Loading application">
+      <div class="loading-state"><span class="loading-logo" aria-hidden="true">P</span><strong>Preparing your day…</strong></div>
+    </section>
+
+    <!-- SCREEN 3: contains every view available after a successful login. -->
+    <section id="application-screen" class="screen" aria-label="Teacher application">
+      <!-- JavaScript reuses this live region for save, sync and error messages. -->
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+      <!-- HOME VIEW: the teacher's next class, schedule and attendance summary. -->
+      <section id="home-view" class="app-view">
+        <header class="topbar"><div><small>Monday, 20 July</small><h1>Good morning, Sarah</h1></div><span class="avatar" aria-label="Sarah Ahmed">SA</span></header>
+        <div id="network-status" class="card status-row"><span><i class="status-dot" aria-hidden="true"></i><span id="network-label">Online · All changes synced</span></span><button id="network-toggle" class="button" type="button">Go offline</button></div>
+        <article class="card next-class">
+          <div class="split"><div><small>Next class · 09:00</small><h2>Year 8 · Mathematics</h2></div><span class="badge">Register due</span></div>
+          <p>Room 12 · 29 pupils · 09:00–09:50</p>
+          <button class="button button-primary button-block open-register" data-class-name="Year 8 · Mathematics" type="button">Take register</button>
+        </article>
+        <div class="section-heading"><h2>Today’s schedule</h2><button class="button button-quiet" data-view-name="timetable" type="button">Full timetable</button></div>
+        <div class="schedule-list">
+          <div class="schedule-row"><strong>09:00</strong><span><strong>Year 8 · Mathematics</strong><small>Room 12 · 29 pupils</small></span><span class="badge">Due</span></div>
+          <div class="schedule-row"><strong>10:10</strong><span><strong>Year 9 · Mathematics</strong><small>Room 14 · 27 pupils</small></span><span class="badge">Upcoming</span></div>
+          <div class="schedule-row"><strong>13:20</strong><span><strong>Year 7 · Form time</strong><small>Room 8 · 26 pupils</small></span><span class="badge">Upcoming</span></div>
+        </div>
+        <div class="section-heading"><h2>Attendance today</h2><small>Last updated 08:42</small></div>
+        <div class="statistics"><article class="card"><small>Present</small><strong>52</strong></article><article class="card"><small>Absent</small><strong>3</strong></article><article class="card"><small>Late</small><strong>1</strong></article></div>
+        <div class="attendance-bar" role="img" aria-label="Attendance today: 52 present, 3 absent and 1 late"><span class="present-segment"></span><span class="absent-segment"></span><span class="late-segment"></span></div>
+      </section>
+
+      <!-- CLASSES VIEW: all teaching groups assigned to the signed-in teacher. -->
+      <section id="classes-view" class="app-view" hidden>
+        <header class="topbar"><div><small>Your teaching groups</small><h1>Classes</h1></div><span class="avatar">SA</span></header>
+        <div class="class-list">
+          <button class="card class-row open-register" data-class-name="Year 8 · Mathematics" type="button"><span><strong>Year 8 · Mathematics</strong><small>29 pupils · Room 12</small></span><span aria-hidden="true">›</span></button>
+          <button class="card class-row open-register" data-class-name="Year 9 · Mathematics" type="button"><span><strong>Year 9 · Mathematics</strong><small>27 pupils · Room 14</small></span><span aria-hidden="true">›</span></button>
+          <button class="card class-row open-register" data-class-name="Year 7 · Form time" type="button"><span><strong>Year 7 · Form time</strong><small>26 pupils · Room 8</small></span><span aria-hidden="true">›</span></button>
+        </div>
+      </section>
+
+      <!-- TIMETABLE VIEW: a fuller schedule than the short list on the home view. -->
+      <section id="timetable-view" class="app-view" hidden>
+        <header class="topbar"><div><small>20–24 July</small><h1>Weekly timetable</h1></div><span class="avatar">SA</span></header>
+        <div class="day-picker" aria-label="Choose timetable day"><button class="button button-primary" type="button">Mon 20</button><button class="button" type="button">Tue 21</button><button class="button" type="button">Wed 22</button><button class="button" type="button">Thu 23</button><button class="button" type="button">Fri 24</button></div>
+        <div class="schedule-list">
+          <div class="schedule-row"><strong>09:00</strong><span><strong>Year 8 · Mathematics</strong><small>Room 12 · 09:00–09:50</small></span><button class="button open-register" data-class-name="Year 8 · Mathematics" type="button">Register</button></div>
+          <div class="schedule-row"><strong>10:10</strong><span><strong>Year 9 · Mathematics</strong><small>Room 14 · 10:10–11:00</small></span><button class="button open-register" data-class-name="Year 9 · Mathematics" type="button">Register</button></div>
+          <div class="schedule-row"><strong>13:20</strong><span><strong>Year 7 · Form time</strong><small>Room 8 · 13:20–13:45</small></span><button class="button open-register" data-class-name="Year 7 · Form time" type="button">Register</button></div>
+        </div>
+      </section>
+
+      <!-- REGISTER VIEW: pupil rows are inserted here dynamically by app.js. -->
+      <section id="register-view" class="app-view" hidden>
+        <header class="register-header"><button id="register-back" class="button button-quiet" type="button" aria-label="Return to previous page">←</button><div><small>Monday, 20 July · 09:00</small><h1 id="register-class-name">Year 8 · Mathematics</h1></div></header>
+        <div class="card status-row"><span id="register-summary">6 present · 0 absent · 0 late</span><span id="draft-status" class="badge">Draft</span></div>
+        <div id="pupil-list" class="pupil-list" aria-label="Class attendance register"></div>
+        <div class="register-actions"><button id="save-draft" class="button" type="button">Save draft</button><button id="submit-register" class="button button-primary" type="button">Submit register</button></div>
+      </section>
+
+      <!-- Shared navigation. JavaScript hides it while a register is open. -->
+      <nav id="bottom-navigation" class="bottom-navigation" aria-label="Application navigation">
+        <button class="button button-quiet navigation-item is-selected" data-view-name="home" type="button"><span aria-hidden="true">⌂</span>Home</button>
+        <button class="button button-quiet navigation-item" data-view-name="timetable" type="button"><span aria-hidden="true">▦</span>Timetable</button>
+        <button class="button button-quiet navigation-item" data-view-name="classes" type="button"><span aria-hidden="true">♙</span>Classes</button>
+        <button class="button button-quiet navigation-item" data-view-name="more" type="button"><span aria-hidden="true">☰</span>More</button>
+      </nav>
+    </section>
+  </main>
+</body>
+</html>
