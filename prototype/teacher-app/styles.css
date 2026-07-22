@@ -69,6 +69,8 @@ input { width: 100%; border: 1px solid var(--border); border-radius: 12px; paddi
 /* Home dashboard, schedule and attendance chart */
 .next-class { display: grid; gap: .75rem; }
 .next-class p { color: var(--muted); margin-bottom: 0; }
+.empty-state { display: grid; gap: .35rem; }
+.empty-state p { color: var(--muted); margin: 0; }
 .section-heading { margin: 1.4rem 0 .7rem; }
 .section-heading h2 { margin: 0; }
 .schedule-list { display: grid; }
@@ -78,9 +80,9 @@ input { width: 100%; border: 1px solid var(--border); border-radius: 12px; paddi
 .statistics .card { display: grid; gap: .25rem; }
 .statistics strong { font-size: 1.6rem; }
 .attendance-bar { height: 9px; border-radius: 999px; overflow: hidden; display: flex; margin-top: .8rem; background: var(--border); }
-.present-segment { width: 92.9%; background: var(--success); }
-.absent-segment { width: 5.3%; background: var(--danger); }
-.late-segment { width: 1.8%; background: var(--warning); }
+.present-segment { background: var(--success); }
+.absent-segment { background: var(--danger); }
+.late-segment { background: var(--warning); }
 
 /* Classes, timetable and attendance register */
 .class-list, .pupil-list { display: grid; gap: .7rem; }
